@@ -1,0 +1,37 @@
+{% load static %}
+
+{% block content %}
+
+<h2>Device Graph for Device 1</h2>
+
+<canvas id="myChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    // Get the device data from the template context
+    let deviceData = {{ device_data|safe }};
+
+    // Get the canvas element
+    let ctx = document.getElementById('myChart').getContext('2d');
+
+    // Create the chart
+    let myChart = new Chart(ctx, {
+        type: 'line',
+        data: deviceData,
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        parser: 'YYYY-MM-DD HH:mm:ss',
+                        unit: 'day',
+                        displayFormats: {
+                            day: 'MMM DD'
+                        }
+                    }
+                }]
+            }
+        }
+    });
+</script>
+{% endblock %}
